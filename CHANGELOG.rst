@@ -2,8 +2,8 @@
 Changelog for package rosbag2_to_video
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.0 (2024-08-29)
+------------------
 * Remove unreachable line of code (`#5 <https://github.com/fictionlab/rosbag2_to_video/issues/5>`_)
 * Add readme (`#4 <https://github.com/fictionlab/rosbag2_to_video/issues/4>`_)
 * Improve codecs and file format support (`#3 <https://github.com/fictionlab/rosbag2_to_video/issues/3>`_)
