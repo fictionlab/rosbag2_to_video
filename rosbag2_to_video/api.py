@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from genericpath import isdir
 import pathlib
 import sys
 from typing import Any
@@ -93,8 +92,7 @@ class CommandInputError(ValueError):
 def get_stamp_from_image_msg(image_msg) -> float:
     """Convert timestamp in msg from nanoseconds to seconds."""
     stamp = rclpy.time.Time.from_msg(image_msg.header.stamp).nanoseconds
-    stamp = stamp / 1e9
-    return stamp
+    return stamp / 1e9
 
 
 def get_topic_type(topic_name: str, topics_and_types) -> str:
@@ -112,7 +110,7 @@ def get_topic_type(topic_name: str, topics_and_types) -> str:
 
 
 class SequentialImageBagReader:
-    """Reader of images from a bagfile source sequentially"""
+    """Reader of images from a bagfile source sequentially."""
 
     def __init__(self, bag_reader: rosbag2_py.SequentialReader, topic_name: str):
         """
@@ -133,13 +131,13 @@ class SequentialImageBagReader:
             self._msg_to_cv2 = lambda msg: self._cvbridge.compressed_imgmsg_to_cv2(msg, 'bgr8')
         storage_filter = rosbag2_py.StorageFilter(topics=[topic_name])
         self._bag_reader.set_filter(storage_filter)
-    
-    def next(self) -> Tuple['np.ndarray', float]:
+
+    def get_next(self) -> Tuple['np.ndarray', float]:
         """Return next image and its timestamp."""
-        _, data, _ = self._bag_reader.read_next()    
+        _, data, _ = self._bag_reader.read_next()
         image_msg = deserialize_message(data, self._msg_type)
         return self._msg_to_cv2(image_msg), get_stamp_from_image_msg(image_msg)
-    
+
     def has_next(self):
         """Return true if there is at least one more message to read."""
         return self._bag_reader.has_next()
@@ -172,10 +170,9 @@ class SequentialVideoWriter:
         self._start_stamp: float = start_stamp
         self._last_image: 'np.ndarray' = first_cv_image
         self._last_image_written_once: bool = True
-    
+
     def add_frame(self, cv_image: 'np.ndarray', stamp: float):
         """Add a frame to the video, given an image and its timestamp."""
-
         self._images_processed += 1
         t_from_start = stamp - self._start_stamp
 
@@ -202,13 +199,13 @@ class SequentialVideoWriter:
                 file=sys.stderr)
         self._last_image_written_once = True
         self._frame_count += repeat_last_image + 1
-    
+
     def close(self):
         """Close the video writer."""
         if not self._last_image_written_once:
             self._cv_video_writer.write(self._last_image)
         self._cv_video_writer.release()
-    
+
     @property
     def images_processed(self) -> int:
         """
@@ -220,14 +217,12 @@ class SequentialVideoWriter:
 
     @property
     def frames_written(self) -> int:
-        """
-        Number of frames written to the video.
-        """
+        """Get the number of frames that were written to the video."""
         return self._frame_count
-    
+
     @property
     def images_skipped(self) -> int:
-        """Number of images that were skipped and not written to the video."""
+        """Get the number of images that were skipped and not written to the video."""
         return self._images_skipped
 
 
@@ -274,7 +269,6 @@ def create_sequential_video_writer(
         Video width and height are got from here.
     :param start_stamp: Timestamp of the first image.
     """
-
     height, width, _ = first_cv_image.shape
     cv_video_writer = cv2.VideoWriter()
     success = cv_video_writer.open(
@@ -296,11 +290,11 @@ def convert_bag_to_video(
     if pathlib.PurePath(output_path).suffix == '':
         output_path += '.mp4'
     image_reader = create_sequential_image_bag_reader(bag_path, storage_id, topic_name)
-    cv_image, start_stamp = image_reader.next()
+    cv_image, start_stamp = image_reader.get_next()
     video_writer = create_sequential_video_writer(output_path, codec, fps, cv_image, start_stamp)
 
     while image_reader.has_next():
-        cv_image, stamp = image_reader.next()
+        cv_image, stamp = image_reader.get_next()
         video_writer.add_frame(cv_image, stamp)
     video_writer.close()
 
