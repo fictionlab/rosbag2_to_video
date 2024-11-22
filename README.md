@@ -2,7 +2,14 @@
 
 ## Installation
 
-The only method available is from source.
+### Binaries
+
+```bash
+sudo apt install ros-${ROS_DISTRO}-rosbag2-to-video
+```
+
+### From source
+
 It can be added to your colcon workspace and be installed as usual.
 
 ```bash
@@ -10,9 +17,10 @@ It can be added to your colcon workspace and be installed as usual.
 mkdir -p new_ws/src
 cd new_ws/src
 # clone repo
-git clone https://github.com/ivanpauno/rosbag2_to_video
+git clone https://github.com/fictionlab/rosbag2_to_video
 cd ..
 # install dependencies
+rosdep update
 rosdep install --from-paths src --ignore-src -y
 # build workspace
 colcon build
