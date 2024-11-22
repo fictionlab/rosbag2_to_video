@@ -2,6 +2,15 @@
 Changelog for package rosbag2_to_video
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Update maintainer
+* Add CONTRIBUTING.md
+* Add mypy test
+* Fix flake8 and pep257 errors
+* Don't skip copyright check
+* Contributors: Błażej Sowa
+
 1.0.0 (2024-08-29)
 ------------------
 * Remove unreachable line of code (`#5 <https://github.com/fictionlab/rosbag2_to_video/issues/5>`_)
