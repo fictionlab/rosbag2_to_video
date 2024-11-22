@@ -4,8 +4,12 @@
   <name>rosbag2_to_video</name>
   <version>1.0.0</version>
   <description>Command line tool to create a video from a rosbag recording</description>
-  <maintainer email="ivanpauno@ekumenlabs.con">Ivan Santiago Paunovic</maintainer>
+
+  <maintainer email="blazej@fictionlab.pl">Błażej Sowa</maintainer>
+
   <license>Apache-2.0</license>
+
+  <author email="ivanpauno@ekumenlabs.com">Ivan Santiago Paunovic</author>
 
   <exec_depend>libopencv-dev</exec_depend>
   <exec_depend>python3-opencv</exec_depend>
