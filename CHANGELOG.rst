@@ -2,8 +2,8 @@
 Changelog for package rosbag2_to_video
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.1 (2024-11-22)
+------------------
 * Update maintainer
 * Add CONTRIBUTING.md
 * Add mypy test
