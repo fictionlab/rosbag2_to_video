@@ -13,13 +13,17 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
+    extras_require={
+        'test': [
+            'pytest',
+        ],
+    },
     author='Ivan Santiago Paunovic',
     author_email='ivanpauno@ekumenlabs.com',
     maintainer='Błażej Sowa',
     maintainer_email='blazej@ficionlab.pl',
     description='Command line tool to create a video from a rosbag recording',
     license='Apache-2.0',
-    tests_require=['pytest'],
     entry_points={
         'console_scripts': [
             'rosbag2_to_video = rosbag2_to_video:main',
