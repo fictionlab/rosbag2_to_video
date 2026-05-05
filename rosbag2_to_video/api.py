@@ -29,6 +29,7 @@ from rosidl_runtime_py.utilities import get_message
 
 if TYPE_CHECKING:
     from argparse import ArgumentParser
+
     import numpy as np
 
 
